@@ -33,7 +33,8 @@ class Graphe(object):
         li=[]
         for i in (list(self._graphe_dict)):
             for j in(self._graphe_dict[i]):
-                li.append([i,j])
+                if[i,j][::-1] not in li:
+                    li.append([i,j])
         return li
     def add_sommet(self, sommet):
         """ Si le "sommet" n'set pas déjà présent

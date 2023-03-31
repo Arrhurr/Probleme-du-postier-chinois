@@ -13,7 +13,7 @@ g = mg.Graphe(graphe)
 
 
 def comparer_Chemin(chem1,chem2):
-    if chem1==chem2[::-1]:
+    if chem1==chem2[::-1] or chem1==chem2:
         return True
     else:
         return False
@@ -27,25 +27,23 @@ def ifin(liste,arrete):
         i+=1
     return False
 
-def chemin_recursif(chemin,dep,nbMax):
+def chemin_recursif(chemin,dep,nbMax,g):
     liste=None
-    for i in dep.aretes:
-        if not ifin(chemin,dep+i):
-            chemin.append(dep+i)
-            liste=chemin_recursif(chemin,i)
-        elif i==dep.aretes[-1]:
-            return None
     if len(chemin)==nbMax:
         return chemin
-    if liste is not None:
-        return chemin
+    for i in g.aretes(dep):
+        if not ifin(chemin,dep+i):
+            chemin.append(dep+i)
+            liste=chemin_recursif(chemin,i,nbMax,g)
+        elif i==g.aretes(dep)[-1]:
+            return chemin
         
 
 def chemin_Eulerien(g):
     impair=[]
     for som in g.all_sommets():
         if len(g.aretes(som))%2==1:
-            impair.append(g)
+            impair.append(som)
     if len(impair)>2:
         return []
     elif len(impair)>0 and len(impair)<=2:
@@ -53,8 +51,8 @@ def chemin_Eulerien(g):
     else:
         dep=g.all_sommets()[0]
     chemin=[]
-    nb=len(g.all_aretes)
-    chemin=chemin_recursif(chemin,dep,nb)
+    nb=len(g.all_aretes())
+    chemin=chemin_recursif(chemin,dep,nb,g)
     return chemin
 
 print(chemin_Eulerien(g))
