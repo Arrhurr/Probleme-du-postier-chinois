@@ -1,23 +1,4 @@
 #Def graphe eulerien : Un graphe connexe admet un parcours eulérien si et seulement si ses sommets sont tous de degré pair sauf au plus deux
-import mygraph as mg
-graphe = {"A":["B","C","K"],
-          "B":["A","D","E","F","G"],
-          "C":["A","D","J","L"],
-          "D":["B","C","E","H","J"],
-          "E":["B","D","H","I","L"],
-          "F":["B","G"],
-          "G":["B","F","H","I"],
-          "H":["B","E","G","I"],
-          "I":["E","G","H"],
-          "J":["C","D","L"],
-          "K":["A","B"],
-          "L":["C","E","J"]}
-
-g = mg.Graphe(graphe)
-
-
-
-
 def comparer_Chemin(chem1,chem2):
     if chem1==chem2[::-1] or chem1==chem2:
         return True
@@ -60,5 +41,3 @@ def chemin_Eulerien(g):
     nb=len(g.all_aretes())
     chemin=chemin_recursif(chemin,dep,nb,g)
     return chemin
-
-print(chemin_Eulerien(g))
