@@ -27,16 +27,34 @@ def ifin(liste,arrete):
         i+=1
     return False
 
+def chemin_recursif(chemin,dep,nbMax):
+    liste=None
+    for i in dep.aretes:
+        if not ifin(chemin,dep+i):
+            chemin.append(dep+i)
+            liste=chemin_recursif(chemin,i)
+        elif i==dep.aretes[-1]:
+            return None
+    if len(chemin)==nbMax:
+        return chemin
+    if liste is not None:
+        return chemin
+        
+
 def chemin_Eulerien(g):
     impair=[]
     for som in g.all_sommets():
-        if g.arretes(som)%2==1:
+        if len(g.aretes(som))%2==1:
             impair.append(g)
     if len(impair)>2:
         return []
     elif len(impair)>0 and len(impair)<=2:
-        liste_dep=impair
+        dep=impair[0]
     else:
-        liste_dep=g.all_sommets()
-    
-    
+        dep=g.all_sommets()[0]
+    chemin=[]
+    nb=len(g.all_aretes)
+    chemin=chemin_recursif(chemin,dep,nb)
+    return chemin
+
+print(chemin_Eulerien(g))
